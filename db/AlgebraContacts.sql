@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
 	salt VARCHAR(32) NOT NULL,
 	name VARCHAR(50) NULL,
 	joined TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	role_id INT UNSIGNED NOT NULL 
+	role_id INT UNSIGNED NOT NULL
 	) ENGINE = InnoDB;
 	
 CREATE TABLE IF NOT EXISTS roles (
@@ -37,5 +37,10 @@ CREATE TABLE IF NOT EXISTS contacts (
 	contact_data TEXT NOT NULL,
 	person_id INT UNSIGNED NOT NULL
 	) ENGINE = InnoDB;	
+
+ALTER TABLE users ADD FOREIGN KEY (role_id) REFERENCES roles(id);
+ALTER TABLE sessions ADD FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE persons ADD FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE contacts ADD FOREIGN KEY (person_id) REFERENCES persons(id);
 
 /*FOREIGN keyove dodati */
