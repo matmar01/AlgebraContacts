@@ -2,7 +2,7 @@
 	
 	require_once 'core/init.php';
 	
-	Helper::getHeader('Algebra','header');
+	Helper::getHeader('Algebra','main-header');
 	
 ?>	
 	<div class="row">
