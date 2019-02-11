@@ -25,8 +25,48 @@
 	</div>
 <?php
 	
+	$db = DB::getInstance();
+	//$rez = $db->query('SELECT * FROM users WHERE id = ? AND username = ?;',array(1,'alex'));
+	
+	$get = $db->get('name','users',['id','=',1]);
+	
+	//$delete = $db->delete('users',['id','=',1]);
+	
+	$find = $db->find(3,'users');
+	
+	/*echo '<pre>';
+	var_dump($rez);
+	echo '</pre>';*/
+	
+	/*echo '<pre>';
+	var_dump($find);
+	echo '</pre>';*/
+	
+	/*echo '<pre>';
+	var_dump($delete);
+	echo '</pre>';*/
+	
+	/*echo '<pre>';
+	print_r(Config::get('app'));
+	echo '</pre>';
+	*/
+	
+	/*$update = $db->update('users',4,['username' => 'marina',
+	'name' => 'Ivan']);
+	
 	echo '<pre>';
-	print_r(Config::get('session'));
+	var_dump($update);
+	echo '</pre>';*/
+	
+	$insert = $db->insert('users',
+	['name' => 'Iva',
+	'username' => 'iva',
+	'password' => 'q12432543',
+	'salt' => '5468354',
+	'role_id' => '1']);
+	
+	echo '<pre>';
+	var_dump($insert);
 	echo '</pre>';
 	
 	Helper::getFooter('footer');
