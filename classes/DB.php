@@ -61,7 +61,7 @@
 				return $this;
 			}
 			
-		private function action($action,$table,$where = array()) {
+		public function action($action,$table,$where = array()) {
 			if (count ($where) === 3) {
 				$operators = array('=','<','>','<=','>=');
 				$field = $where[0];
@@ -74,6 +74,76 @@
 						}
 					}
 				}
+			else {
+				$sql = "$action FROM $table";
+				if  (!$this->query($sql)->getError()) {
+					return $this;
+					}
+				}	
+			return false;
+			}
+		
+		public function action2($action,$table,$where = array()) {
+			if (count ($where) === 3) {
+				$operators = array('=','<','>','<=','>=');
+				$field = $where[0];
+				$operator = $where[1];
+				$value = $where[2];
+				if (in_array($operator,$operators)) {
+					$sql = "$action FROM $table WHERE $field $operator ?";
+					if (!$this->query($sql,array($value))->getError()) {
+						return $this;
+						}
+					}
+				}
+				
+			else if (((count($where) - 3) % 4 === 0)) {
+				$operators = array('=','<','>','<=','>=','!=');
+				$options = array('AND','OR','NOT');
+				$a = $b = $c = $d = 0;
+				foreach ($where as $key => $values) {
+					if ($key === 0 OR (($key % 4) === 0)) {
+						$field[$a] = $values;
+						$a++;
+						}
+					else if ($key === 1 OR ((($key - 1) % 4) === 0)) {
+						$operator[$b] = $values;
+						$b++;
+						}
+					else if ($key === 2 OR ((($key - 2) % 4) === 0)) {
+						$valueles[$c] = $values;
+						$c++;
+						}
+					else if ($key === 3 OR ((($key - 3) % 4) === 0)) {
+						$option[$d] = $values;
+						$d++;
+						}		
+					}
+				echo '<pre>';	
+				print_r ($field);	
+				print_r ($operator);
+				print_r ($valueles);
+				print_r ($option);
+				echo'</pre>';
+				$sql = "$action FROM $table WHERE ";
+				foreach ($operator as $key => $value) {
+					if (in_array($value,$operators)) {
+						if ($key < count($operator) - 1 AND in_array($option[$key],$options)) {
+							$sql .= "$field[$key] $operator[$key] ? $option[$key] ";
+							}
+						else {
+							$sql .= "$field[$key] $operator[$key] ?";
+							}	
+						}
+					}
+				echo '<pre>' . $sql;
+				print_r ($valueles);
+				echo '</pre>';
+				if (!$this->query($sql,$valueles)->getError()) {
+					return $this;
+					}
+				}
+				
 			else {
 				$sql = "$action FROM $table";
 				if  (!$this->query($sql)->getError()) {
@@ -134,7 +204,26 @@
 			}
 		
 		public function update($table,$id,$fields) {
-			
+			if ($id) {
+				$pom = '';	
+				$y = 1;
+				foreach (array_keys($fields) as $key => $value) {
+					$pom .= "$value = ?";
+					if ($y < count(array_keys($fields))) {
+						$pom .= ',';
+						}
+					$y++;	
+					}
+				$pom .= " WHERE id = ?";	
+				$sql = "UPDATE $table SET $pom";
+				$fields[] = $id;
+				if (!$this->query($sql,$fields)->getError()) {
+					return $this;
+					}				
+				}
+			else {
+				return false;
+				}	
 			}	
 		
 		public function getConnection() {
@@ -153,6 +242,6 @@
 			return $this->count;
 			}	
 		}
-	//Zadaća update funkciju funkcija action sa više uvjeta
+	//Zadaća update funkciju i funkcija action sa više uvjeta
 	
 ?>
