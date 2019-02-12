@@ -61,7 +61,7 @@
 				return $this;
 			}
 			
-		public function action($action,$table,$where = array()) {
+		/*private function action($action,$table,$where = array()) {
 			if (count ($where) === 3) {
 				$operators = array('=','<','>','<=','>=');
 				$field = $where[0];
@@ -81,9 +81,9 @@
 					}
 				}	
 			return false;
-			}
+			}*/
 		
-		public function action2($action,$table,$where = array()) {
+		private function action($action,$table,$where = array()) {
 			if (count ($where) === 3) {
 				$operators = array('=','<','>','<=','>=');
 				$field = $where[0];
@@ -100,31 +100,20 @@
 			else if (((count($where) - 3) % 4 === 0)) {
 				$operators = array('=','<','>','<=','>=','!=');
 				$options = array('AND','OR','NOT');
-				$a = $b = $c = $d = 0;
 				foreach ($where as $key => $values) {
 					if ($key === 0 OR (($key % 4) === 0)) {
-						$field[$a] = $values;
-						$a++;
+						$field[] = $values;
 						}
 					else if ($key === 1 OR ((($key - 1) % 4) === 0)) {
-						$operator[$b] = $values;
-						$b++;
+						$operator[] = $values;
 						}
 					else if ($key === 2 OR ((($key - 2) % 4) === 0)) {
-						$valueles[$c] = $values;
-						$c++;
+						$valueles[] = $values;
 						}
 					else if ($key === 3 OR ((($key - 3) % 4) === 0)) {
-						$option[$d] = $values;
-						$d++;
+						$option[] = $values;
 						}		
 					}
-				echo '<pre>';	
-				print_r ($field);	
-				print_r ($operator);
-				print_r ($valueles);
-				print_r ($option);
-				echo'</pre>';
 				$sql = "$action FROM $table WHERE ";
 				foreach ($operator as $key => $value) {
 					if (in_array($value,$operators)) {
@@ -136,9 +125,6 @@
 							}	
 						}
 					}
-				echo '<pre>' . $sql;
-				print_r ($valueles);
-				echo '</pre>';
 				if (!$this->query($sql,$valueles)->getError()) {
 					return $this;
 					}

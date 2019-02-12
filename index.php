@@ -71,7 +71,7 @@
 	var_dump($update);
 	echo '</pre>';*/
 	
-	$action = $db->action2('SELECT *','users',['id','=',3,'AND','name','!=','janko','OR','name','!=','Marina']);
+	$action = $db->get('*','users',['id','=',3,'AND','name','!=','janko','OR','name','!=','Marina']);
 	
 	echo '<pre>';
 	var_dump($action);
