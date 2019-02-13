@@ -135,7 +135,8 @@
 				if  (!$this->query($sql)->getError()) {
 					return $this;
 					}
-				}	
+				}
+				
 			return false;
 			}
 		
@@ -191,11 +192,12 @@
 		
 		public function update($table,$id,$fields) {
 			if ($id) {
+				$arr_k = count(array_keys($fields));
 				$pom = '';	
 				$y = 1;
 				foreach (array_keys($fields) as $key => $value) {
 					$pom .= "$value = ?";
-					if ($y < count(array_keys($fields))) {
+					if ($y < $arr_k) {
 						$pom .= ',';
 						}
 					$y++;	
@@ -226,7 +228,12 @@
 		
 		public function getCount() {
 			return $this->count;
-			}	
+			}
+		
+		public function getFirst() {
+			return $this_>results[0];
+			}
+		
 		}
 	//Zadaća update funkciju i funkcija action sa više uvjeta
 	
