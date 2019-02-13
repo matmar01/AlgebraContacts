@@ -99,7 +99,7 @@
 				
 			else if (((count($where) - 3) % 4 === 0)) {
 				$operators = array('=','<','>','<=','>=','!=');
-				$options = array('AND','OR','NOT');
+				$options = array('AND','OR');
 				foreach ($where as $key => $values) {
 					if ($key === 0 OR (($key % 4) === 0)) {
 						$field[] = $values;
