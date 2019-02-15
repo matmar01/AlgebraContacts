@@ -6,7 +6,7 @@
 		private $passed = false;
 		private $errors = array();
 		
-		public function __construct () {
+		public function __construct () { 
 			
 			$this->db = DB::getInstance();
 			
@@ -42,6 +42,15 @@
 								if ($value != Input::get('password')) {
 									$this->addError($item,"Field $item must match $rule_value.");
 									}
+								break;	
+							case 'condition':
+								$lowercase = preg_match('/[a-z]/',$value);
+								$uppercase = preg_match('/[A-Z]/',$value);
+								$number = preg_match('/[0-9]/',$value);
+								if (!($lowercase AND $uppercase && $number)) {
+									$this->addError($item,"Field $item must have numbers and lowercase and uppercase letters ");
+									}
+								break;
 							}
 						}	
 					}

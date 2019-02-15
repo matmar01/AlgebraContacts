@@ -21,17 +21,18 @@
 				],
 			'password' => [
 				'required' => true,
-				'min' => 8  //zadaca veliko i malo slovo i broj
+				'min' => 8,
+				'condition' =>true //zadaca veliko i malo slovo i broj
 				],
 			'confirm_password' => [
 				'required' => true,
-				'matches' => 'password'
+				'matches' => 'password' 
 				]
 			]);
 		}
 	
 	echo '<pre>';
-	print_r($validate->getErrors());
+	print_r($validation->getErrors());
 	echo '</pre>';
 ?>	
 
@@ -50,17 +51,23 @@
 						//hasError za ostala polja 
 						?>
 					</div>
-					<div class="form-group">
+					<div class="form-group <?php echo($validation->hasError('username')) ? 'has-error' : ''; ?>">
 						<label class="control-label" for="name">Username*</label>
-						<input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
+						<input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" value="<?php echo Input::get('username')  ?>">
+						<?php echo ($validation->hasError('username')) ? '<p class="text-danger">' . $validation->hasError('username') . '</p>' : '';
+						?>
 					</div>
-					<div class="form-group">
+					<div class="form-group <?php echo($validation->hasError('password')) ? 'has-error' : ''; ?>">
 						<label class="control-label" for="password">Password</label>
 						<input type="password" class="form-control" id="password" name="password" placeholder="Choose a password">
+						<?php echo ($validation->hasError('password')) ? '<p class="text-danger">' . $validation->hasError('password') . '</p>' : '';
+						?>
 					</div>
-					<div class="form-group">
+					<div class="form-group <?php echo($validation->hasError('confirm_password') OR $validation->hasError('password')) ? 'has-error' : ''; ?>">
 						<label class="control-label" for="confirm_password">Confirm Password</label>
 						<input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Enter your password again">
+						<?php echo ($validation->hasError('confirm_password')) ? '<p class="text-danger">' . $validation->hasError('confirm_password') . '</p>' : '';
+						?>
 					</div>
 					<button type="submit" class="btn btn-primary">Create an account</button>
 				</form>
