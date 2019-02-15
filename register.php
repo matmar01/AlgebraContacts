@@ -22,18 +22,19 @@
 			'password' => [
 				'required' => true,
 				'min' => 8,
-				'condition' =>true //zadaca veliko i malo slovo i broj
+				'password_condition' =>true //zadaca veliko i malo slovo i broj
 				],
 			'confirm_password' => [
 				'required' => true,
 				'matches' => 'password' 
 				]
 			]);
+			if ($validate->passed()) {
+				Session::flash('success',"You have registered successfuly");
+				header('Location:login.php');
+				exit();
+				}
 		}
-	
-	echo '<pre>';
-	print_r($validation->getErrors());
-	echo '</pre>';
 ?>	
 
 <div class="row">
@@ -44,6 +45,8 @@
 			</div>
 			<div class="panel-body">
 				<form method="post">
+				<input type="hidden">
+				<!--implementirati taj csrl token -->
 					<div class="form-group <?php echo($validation->hasError('name')) ? 'has-error' : ''; ?>">
 						<label class="control-label" for="name">Name*</label>
 						<input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" value="<?php echo Input::get('name')  ?>">
@@ -63,7 +66,7 @@
 						<?php echo ($validation->hasError('password')) ? '<p class="text-danger">' . $validation->hasError('password') . '</p>' : '';
 						?>
 					</div>
-					<div class="form-group <?php echo($validation->hasError('confirm_password') OR $validation->hasError('password')) ? 'has-error' : ''; ?>">
+					<div class="form-group <?php echo($validation->hasError('confirm_password')) ? 'has-error' : ''; ?>">
 						<label class="control-label" for="confirm_password">Confirm Password</label>
 						<input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Enter your password again">
 						<?php echo ($validation->hasError('confirm_password')) ? '<p class="text-danger">' . $validation->hasError('confirm_password') . '</p>' : '';

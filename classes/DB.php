@@ -96,8 +96,8 @@
 						}
 					}
 				}
-				
-			else if (((count($where) - 3) % 4 === 0)) {
+			//moj način
+			/*else if (((count($where) - 3) % 4 === 0)) {
 				$operators = array('=','<','>','<=','>=','!=');
 				$options = array('AND','OR');
 				foreach ($where as $key => $values) {
@@ -124,11 +124,29 @@
 							$sql .= "$field[$key] $operator[$key] ?";
 							}	
 						}
-					}
-				if (!$this->query($sql,$valueles)->getError()) {
+					}*///kraj moj način
+				//profesorov način
+				if(!empty($where)) {
+					$array_chunks = array_chunk($where,4);
+					$field_num = count($array_chunks);
+					$condition = '';
+					$i = 1;
+					
+					foreach ($array_chunks as $chunks) {
+						$values[] = $chunks[2];
+						$condition .= $chunks[0] . " " . $chunks[1] . " ? ";
+						if ($i < $field_num) {
+							$condition .= $chunks[3] . ' ';
+							}
+						$i++;	
+						}
+					$sql = "$action FROM $table WHERE $condition";
+					}//kraj prof način
+					
+				if (!$this->query($sql,$values)->getError()) {
 					return $this;
 					}
-				}
+				
 				
 			else {
 				$sql = "$action FROM $table";

@@ -43,19 +43,20 @@
 									$this->addError($item,"Field $item must match $rule_value.");
 									}
 								break;	
-							case 'condition':
-								$lowercase = preg_match('/[a-z]/',$value);
-								$uppercase = preg_match('/[A-Z]/',$value);
-								$number = preg_match('/[0-9]/',$value);
-								if (!($lowercase AND $uppercase && $number)) {
+							case 'password_condition':
+								$isLowercase = preg_match('/[a-z]/',$value);
+								$isUppercase = preg_match('/[A-Z]/',$value);
+								$isNumber = preg_match('/[0-9]/',$value);
+								if (!($isLowercase && $isUppercase && $isNumber)) {
 									$this->addError($item,"Field $item must have numbers and lowercase and uppercase letters ");
 									}
 								break;
 							}
 						}	
 					}
-				}
+				}	
 			if (empty($this->errors)) {
+				echo 'Mamma Mia!!!';
 				$this->passed = true;
 				}	
 			return $this;
