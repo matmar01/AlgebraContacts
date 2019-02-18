@@ -7,7 +7,7 @@
 			}
 		
 		public static function exists($key) {
-			return isset($_SESSION['key']) ? true : false;
+			return isset($_SESSION[$key]) ? true : false;
 			}
 		
 		public static function put($key,$value) {
@@ -37,6 +37,6 @@
 			}
 		
 		}
-	//Session::exists('token');  tako se koristi
+	//Session::exists('token');
 	
 ?>

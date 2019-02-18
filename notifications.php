@@ -4,8 +4,6 @@
 	
 	$sessions = Session::all();
 	
-	print_r($sessions);
-	
 	foreach ($sessions as $key => $msg) {
 		switch ($key) {
 			case 'success':
@@ -24,8 +22,7 @@
 				<?php
 				Session::delete($key);
 				break;
-				default: 
+			default: 
 			}
 		}
-	print_r($_SESSION);	
 ?>

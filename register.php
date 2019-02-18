@@ -21,8 +21,8 @@
 				],
 			'password' => [
 				'required' => true,
-				'min' => 8,
-				'password_condition' =>true //zadaca veliko i malo slovo i broj
+				'min' => 3,
+				'password_condition' => false //zadaca veliko i malo slovo i broj
 				],
 			'confirm_password' => [
 				'required' => true,
@@ -44,14 +44,13 @@
 				<h3 class="panel-title">Create an account</h3>
 			</div>
 			<div class="panel-body">
-				<form method="post">
-				<input type="hidden">
-				<!--implementirati taj csrl token -->
+				<form method="POST">
+				<input type="hidden" name="token" value="<?php echo Token::setToken();  ?>">
+				<!--implementirati taj csrf token -->
 					<div class="form-group <?php echo($validation->hasError('name')) ? 'has-error' : ''; ?>">
 						<label class="control-label" for="name">Name*</label>
 						<input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" value="<?php echo Input::get('name')  ?>">
 						<?php echo ($validation->hasError('name')) ? '<p class="text-danger">' . $validation->hasError('name') . '</p>' : ''; 
-						//hasError za ostala polja 
 						?>
 					</div>
 					<div class="form-group <?php echo($validation->hasError('username')) ? 'has-error' : ''; ?>">
@@ -80,7 +79,11 @@
 </div>
 
 <?php
-
+	echo '<pre>';
+	print_r($_SESSION);
+	print_r($_POST);
+	echo '</pre>';
+	
 	Helper::getFooter('footer');
 	
 ?>
