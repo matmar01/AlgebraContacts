@@ -46,7 +46,6 @@
 			<div class="panel-body">
 				<form method="POST">
 				<input type="hidden" name="token" value="<?php echo Token::setToken();  ?>">
-				<!--implementirati taj csrf token -->
 					<div class="form-group <?php echo($validation->hasError('name')) ? 'has-error' : ''; ?>">
 						<label class="control-label" for="name">Name*</label>
 						<input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" value="<?php echo Input::get('name')  ?>">
@@ -79,10 +78,11 @@
 </div>
 
 <?php
+	/*
 	echo '<pre>';
 	print_r($_SESSION);
 	print_r($_POST);
-	echo '</pre>';
+	echo '</pre>';*/
 	
 	Helper::getFooter('footer');
 	

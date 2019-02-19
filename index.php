@@ -70,12 +70,13 @@
 	echo '<pre>';
 	var_dump($update);
 	echo '</pre>';*/
-	
+	/*
 	$action = $db->get('name','users',['id','=',3,'AND','name','!=','janko','OR','name','!=','Marina']);
 	
 	echo '<pre>';
 	var_dump($action);
 	echo '</pre>';
+	*/
 	
 	Helper::getFooter('footer');
 	
