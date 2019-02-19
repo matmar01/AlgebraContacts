@@ -15,7 +15,7 @@
 	print_r($_POST);
 	echo '</pre>';*/
 ?>
-//commit -m "User object"
+
 <div class="row">
     <div class="col-xs-12 col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3">
         <div class="panel panel-primary">
