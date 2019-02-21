@@ -41,7 +41,20 @@
 			}
 		
 		public function login($username = null,$password = null) {
-			
+			if (isset($username) && isset($password)) {
+				$data = $this->db->get('password','users',['username','=',$username])->getResults();
+				$hashed = '';
+				foreach ($data as $keys => $values) {
+					foreach ($values as $key => $value) {
+						if ($key == 'password') {
+							$hashed = $value;
+							}
+						}
+					}
+				if (!($hashed == $password)) {
+					throw new Exception("Username and password don't match!");
+					}	
+				}	
 			}
 		
 		public function data() {

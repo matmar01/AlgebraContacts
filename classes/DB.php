@@ -253,6 +253,5 @@
 			}
 		
 		}
-	//Zadaća update funkciju i funkcija action sa više uvjeta
 	
 ?>

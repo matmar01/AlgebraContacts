@@ -35,7 +35,11 @@
 					'matches' => 'password' 
 					]
 				]);
-			}		
+			}
+		else {
+			$validate = NULL;
+			}
+		if (isset($validate)) {
 			if ($validate->passed()) {
 				$salt = Hash::salt(32);
 				$password = Hash::make(Input::get('password'),$salt);
@@ -54,10 +58,12 @@
 					Redirect::to('register');
 					return false;
 					}
-					
+				
+				$_SESSION['username'] = Input::get('username');
 				Session::flash('success',"You have registered successfuly");
 				Redirect::to('login');
 				}		
+			}	
 		}
 ?>	
 

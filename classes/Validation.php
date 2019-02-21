@@ -38,6 +38,13 @@
 									$this->addError($item,"This $item already exists");
 									}
 								break;
+							case 'exists':
+								$check = $this->db->get('id',$rule_value,[$item,'=',$value])->getCount();
+								if ($check) {
+									break;
+									}	
+								$this->addError($item,"This $item doesn't exist");	
+								break;	
 							case 'matches':
 								if ($value != Input::get('password')) {
 									$this->addError($item,"Field $item must match $rule_value.");
@@ -52,7 +59,7 @@
 										$this->addError($item,"Field $item must have numbers and lowercase and uppercase letters ");
 										}
 									break;
-								}	
+									}		
 							}
 						}	
 					}
