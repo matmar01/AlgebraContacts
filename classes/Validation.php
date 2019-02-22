@@ -40,10 +40,10 @@
 								break;
 							case 'exists':
 								$check = $this->db->get('id',$rule_value,[$item,'=',$value])->getCount();
-								if ($check) {
+								if (!$check) {
+									$this->addError($item,"This $item doesn't exist");	
 									break;
 									}	
-								$this->addError($item,"This $item doesn't exist");	
 								break;	
 							case 'matches':
 								if ($value != Input::get('password')) {

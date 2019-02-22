@@ -6,6 +6,12 @@
 	
 	$user = new User();
 	
+	if ($user->check()) {
+		
+		Redirect::to('dashboard');
+		
+		}
+	
 	/*echo $salt = Hash::salt(32);
 	echo '<br/>';
 	echo $password = Hash::make(Input::get('password',$salt));*/

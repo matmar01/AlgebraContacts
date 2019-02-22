@@ -1,5 +1,6 @@
 <?php
-
+	/*
+	 To je od prije
 	require_once 'core/init.php';
 	
 	Helper::getHeader('Algebra Contacts','main-header');
@@ -53,14 +54,67 @@
 					Redirect::to('login');
 					return false;
 					}
-				unset($_POST['password']);
 				Session::put('username',Input::get('username'));
 				Session::flash('success',"You have logged in as " . "<b>" . Session::get('username') . "</b>" .  " successfuly");
 				Redirect::to('dashboard');
 				}
 			}		
 		}
+	
+	Novi dio_
+	
+	*/	
 		
+	
+	require_once 'core/init.php';
+	
+	$user = new User();
+	
+	if ($user->check()) {
+		
+		Redirect::to('dashboard');
+		
+		}
+	
+	$validation = new Validation();
+	if (Input::exists()) {
+		if (Token::factory()->check(Input::get('token'))) {
+			$validation->check([
+				'username' => [
+					'required' => true
+					],
+				'password' => [
+					'required' => true
+					]
+				]);
+			}
+		if ($validation->passed()) {		
+			$username = Input::get('username');
+			$password = Input::get('password');
+
+			$login = $user->login($username,$password);
+			echo '---- ' . $login . ' ----';
+			if ($login) {
+				Session::put('username',Input::get('username'));
+				Session::flash('success',"You have logged in as <b>" . Session::get('username') . "</b> successfuly");
+				Session::delete('username');
+				Redirect::to('dashboard');
+				}
+			else {
+				Session::put('username',Input::get('username'));
+				Session::flash('danger','Login failed,Please try again later.');
+				Redirect::to('login');
+				}	
+			}
+		else {
+			Session::put('username',Input::get('username'));
+			}	
+		}
+	
+	Helper::getHeader('Algebra Contacts','main-header');
+	
+	require 'notifications.php';
+	
 ?>
 
 <div class="row">

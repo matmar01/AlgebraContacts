@@ -23,8 +23,8 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#">About</a></li>
+              <li class="active"><a href="index.php">Home</a></li>
+              <li><a href="logout.php">Logout</a></li>
               <li><a href="#">Contact</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -40,9 +40,34 @@
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="./">Default <span class="sr-only">(current)</span></a></li>
-              <li><a href="../navbar-static-top/">Static top</a></li>
-              <li><a href="../navbar-fixed-top/">Fixed top</a></li>
+				<?php 
+				$user = new User();
+				if ($user->check()) {
+					echo '
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"
+							<span class="glyphicon glyphicon-user"></span> ' .
+							$user->data()->username .
+							' <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="logout.php">Logout</a>
+							</li>	
+						</ul>
+					</li>	
+					';
+					}
+				else {	
+					echo '
+					<li>
+						<a href="login.php">Log In</a>
+					</li>
+					<li>
+						<a href="register.php">Sign Up</a>
+					</li>';
+					}
+				?>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->

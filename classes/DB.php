@@ -249,7 +249,7 @@
 			}
 		
 		public function getFirst() {
-			return $this_>results[0];
+			return $this->results[0];
 			}
 		
 		}

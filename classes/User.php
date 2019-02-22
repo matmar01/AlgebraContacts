@@ -40,8 +40,8 @@
 			return false;	
 			}
 		
-		public function login($username = null,$password = null) {
-			if (isset($username) && isset($password)) {
+		public function login($username,$password) {
+			/*if (isset($username) && isset($password)) {
 				$data = $this->db->get('password','users',['username','=',$username])->getResults();
 				$hashed = '';
 				foreach ($data as $keys => $values) {
@@ -51,10 +51,23 @@
 							}
 						}
 					}
-				if (!($hashed == $password)) {
+				if (!($hashed === $password)) {
 					throw new Exception("Username and password don't match!");
 					}	
-				}	
+				}*/
+			$user = $this->find($username);	
+			if ($user) {
+				if ($this->data()->password === Hash::make($password,$this->data()->salt)) {
+					Session::put($this->session_name,$this->data()->id);
+					return true;
+					}	
+				}
+			return false;					
+			}	
+		
+		public function logout() {
+			Session::delete($this->session_name);
+			session_destroy();
 			}
 		
 		public function data() {

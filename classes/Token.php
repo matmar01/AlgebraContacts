@@ -32,7 +32,7 @@
 		
 		private function __construct() {
 			
-			self::$token_name = 	Config::get('session')['session']['token_name'];
+			self::$token_name = Config::get('session')['session']['token_name'];
 			
 			}
 		// factory pattern 
