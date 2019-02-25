@@ -21,7 +21,7 @@
             </button>
             <a class="navbar-brand" href="#">Project name</a>
           </div>
-          <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li class="active"><a href="index.php">Home</a></li>
               <li><a href="logout.php">Logout</a></li>
@@ -69,6 +69,6 @@
 					}
 				?>
             </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
+        </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
 </nav>

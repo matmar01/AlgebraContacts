@@ -64,7 +64,11 @@
 	Novi dio_
 	
 	*/	
-		
+	/*	
+	echo '<pre>';
+	print_r($_POST);
+	echo '</pre>';
+	*/
 	
 	require_once 'core/init.php';
 	
@@ -91,8 +95,9 @@
 		if ($validation->passed()) {		
 			$username = Input::get('username');
 			$password = Input::get('password');
-
-			$login = $user->login($username,$password);
+			$remember = (bool)Input::get('remember');
+			
+			$login = $user->login($username,$password,$remember);
 			echo '---- ' . $login . ' ----';
 			if ($login) {
 				Session::put('username',Input::get('username'));
@@ -141,6 +146,11 @@
 						<?php echo ($validation->hasError('password')) ? '<p class="text-danger">' . $validation->hasError('password') . '</p>' : '';
 						?>
                     </div>
+					<div class="checkbox">
+						<label for="remember">
+							<input type="checkbox" name="remember" value="true" id="remember">Remember me
+						</label>
+					</div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Sign In</button>
                     </div>
